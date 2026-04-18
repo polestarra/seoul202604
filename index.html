@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>首爾快閃 3 天 2 夜</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A2744;
+    --navy-light: #2C3E6B;
+    --red: #C0392B;
+    --red-pale: #FDECEA;
+    --gold: #C9A84C;
+    --gold-pale: #FBF3E0;
+    --cream: #F8F5F0;
+    --dark: #1C1C1E;
+    --muted: #6B6B6B;
+    --border: #E5E2DA;
+    --white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F2EFE9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg opacity='0.07' fill='%231A2744'%3E%3C!-- 태극 circle --%3E%3Ccircle cx='80' cy='80' r='28' fill='none' stroke='%231A2744' stroke-width='3'/%3E%3Csemicircle/%3E%3Ccircle cx='80' cy='66' r='7'/%3E%3Ccircle cx='80' cy='94' r='7'/%3E%3C!-- top bar --%3E%3Crect x='28' y='34' width='8' height='28' rx='2'/%3E%3Crect x='40' y='34' width='8' height='28' rx='2'/%3E%3Crect x='52' y='34' width='8' height='28' rx='2'/%3E%3C!-- bottom bar --%3E%3Crect x='92' y='98' width='8' height='28' rx='2'/%3E%3Crect x='104' y='98' width='8' height='28' rx='2'/%3E%3Crect x='116' y='98' width='8' height='28' rx='2'/%3E%3C!-- right bar --%3E%3Crect x='118' y='28' width='28' height='8' rx='2'/%3E%3Crect x='118' y='40' width='28' height='8' rx='2'/%3E%3Crect x='118' y='58' width='28' height='8' rx='2'/%3E%3C!-- left bar --%3E%3Crect x='14' y='94' width='28' height='8' rx='2'/%3E%3Crect x='14' y='106' width='28' height='8' rx='2'/%3E%3Crect x='14' y='118' width='28' height='8' rx='2'/%3E%3C/g%3E%3C/svg%3E");
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: #F9A8D4;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero::before { display: none; }
+  .hero::after { display: none; }
+  .hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9D174D;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: #4A0020;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 em {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: rgba(120,0,60,0.85);
+    font-style: italic;
+    display: block;
+    margin-top: 4px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(100,0,50,0.75);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .htag {
+    background: rgba(255,255,255,0.35);
+    border: 1px solid rgba(200,50,100,0.3);
+    color: #6B0030;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 300;
+  }
+
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+  .stat {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+  .stat-val { font-size: 15px; font-weight: 500; color: var(--dark); }
+
+  .sec {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1rem; margin-top: 2.5rem;
+  }
+  .sec-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+  .flight-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem 1.4rem;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .fbadge { font-size: 10px; font-weight: 500; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+  .fbadge.dep { background: #E8EDF8; color: var(--navy); }
+  .fbadge.ret { background: var(--red-pale); color: var(--red); }
+  .flight-route { display: flex; align-items: center; gap: 10px; flex: 1; }
+  .fcode { font-size: 20px; font-weight: 500; }
+  .fport { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .farrow { color: var(--border); font-size: 16px; }
+  .fmeta { text-align: right; }
+  .ftime-str { font-size: 14px; font-weight: 500; }
+  .fdetail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .hotel-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .hotel-ico {
+    width: 46px; height: 46px;
+    background: #E8EDF8;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .hotel-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .hotel-desc { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .hotel-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .hpill { background: #E8EDF8; color: var(--navy); font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+
+  .tab-nav {
+    display: flex; gap: 6px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    background: #EDEBE5;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; color: var(--muted);
+    font-weight: 400;
+    transition: all 0.18s;
+    border-bottom: none;
+    position: relative; bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--dark); }
+  .tab-btn.active {
+    background: var(--white);
+    color: var(--dark); font-weight: 500;
+    border-color: var(--border);
+    border-bottom-color: var(--white);
+    z-index: 1;
+  }
+  .tb-day { font-size: 10px; display: block; color: var(--muted); margin-bottom: 1px; }
+  .tab-btn.active .tb-day { color: var(--navy); }
+  .tab-panel-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 0 12px 12px 12px;
+    overflow: hidden;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .tab-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .day-num {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 500; flex-shrink: 0;
+  }
+  .day-title { font-size: 14px; font-weight: 500; }
+  .day-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .stop {
+    display: flex; gap: 12px; padding: 11px 1.4rem;
+    align-items: flex-start;
+  }
+  .stop:not(:last-child) { border-bottom: 1px solid #F5F3EE; }
+  .stop-time { font-size: 10px; color: var(--muted); width: 38px; flex-shrink: 0; padding-top: 3px; font-weight: 500; }
+  .stop-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .stop-title { font-size: 13px; font-weight: 500; }
+  .stop-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+  .stop-tag {
+    margin-left: auto; font-size: 10px; padding: 2px 9px;
+    border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+    font-weight: 500; letter-spacing: 0.3px;
+  }
+  .t-food    { background: #FEF3C7; color: #92400E; }
+  .t-culture { background: #E8EDF8; color: var(--navy); }
+  .t-market  { background: #FCE7F3; color: #9D174D; }
+  .t-hotel   { background: #DBEAFE; color: #1E40AF; }
+  .t-flight  { background: #F3F4F6; color: #374151; }
+  .t-kpop    { background: #FDE8F0; color: #BE185D; }
+  .t-cafe    { background: #F0FDF4; color: #166534; }
+  .t-relax   { background: #ECFDF5; color: #065F46; }
+
+  .map-link {
+    display: inline-block; margin-left: 6px; font-size: 10px;
+    background: #E8EDF8; color: var(--navy);
+    padding: 2px 7px; border-radius: 10px;
+    text-decoration: none; vertical-align: middle;
+  }
+
+  .tip-box { border-radius: 12px; padding: 1.1rem 1.4rem; margin-bottom: 10px; }
+  .tip-title { font-size: 12px; font-weight: 500; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .tip-box ul { margin-left: 16px; }
+  .tip-box li { font-size: 12px; line-height: 1.9; }
+
+  .footer {
+    text-align: center; padding: 2rem;
+    font-size: 11px; color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .main > * { animation: fadeUp 0.5s ease both; }
+  .main > *:nth-child(1) { animation-delay: 0.05s; }
+  .main > *:nth-child(2) { animation-delay: 0.10s; }
+  .main > *:nth-child(3) { animation-delay: 0.15s; }
+  .main > *:nth-child(4) { animation-delay: 0.20s; }
+  .main > *:nth-child(5) { animation-delay: 0.25s; }
+
+  @media (max-width: 520px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .flight-card { flex-wrap: wrap; gap: 10px; }
+    .fmeta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <canvas class="hero-canvas" id="beautyCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Seoul · South Korea</div>
+    <h1>首爾快閃<em>3 天 2 夜</em></h1>
+    <div class="hero-sub">江南咖啡 · 韓屋文化 · 街頭美食 · 美容 Spa 放鬆</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">出發</div><div class="stat-val">4/23/2026 四</div></div>
+    <div class="stat"><div class="stat-label">回程</div><div class="stat-val">4/25/2026 六</div></div>
+    <div class="stat"><div class="stat-label">住宿</div><div class="stat-val">2 晚</div></div>
+    <div class="stat"><div class="stat-label">行程天數</div><div class="stat-val">3 天</div></div>
+  </div>
+
+  <div class="sec"><span class="sec-label">航班資訊</span><span class="sec-line"></span></div>
+
+  <div class="flight-card">
+    <span class="fbadge dep">去程</span>
+    <div class="flight-route">
+      <div><div class="fcode">TPE</div><div class="fport">桃園 T1</div></div>
+      <div class="farrow">→</div>
+      <div><div class="fcode">ICN</div><div class="fport">仁川 T2</div></div>
+    </div>
+    <div class="fmeta">
+      <div class="ftime-str">01:25 → 05:00</div>
+      <div class="fdetail">LJ 734 · 座位 42C · 15kg 託運</div>
+    </div>
+  </div>
+
+  <div class="flight-card">
+    <span class="fbadge ret">回程</span>
+    <div class="flight-route">
+      <div><div class="fcode">ICN</div><div class="fport">仁川 T2</div></div>
+      <div class="farrow">→</div>
+      <div><div class="fcode">TPE</div><div class="fport">桃園 T1</div></div>
+    </div>
+    <div class="fmeta">
+      <div class="ftime-str">22:40 → 00:10</div>
+      <div class="fdetail">LJ 733 · 座位 42D · 15kg 託運</div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-label">住宿</span><span class="sec-line"></span></div>
+
+  <div class="hotel-card">
+    <div class="hotel-ico">🏨</div>
+    <div>
+      <div class="hotel-name">voco Seoul Gangnam</div>
+      <div class="hotel-desc">144 Dosan daero (Nonhyun dong), Seoul, 06040 Korea</div>
+      <div class="hotel-pills">
+        <span class="hpill">Check-in 4/23</span>
+        <span class="hpill">Check-out 4/25</span>
+        <span class="hpill">2 晚</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-label">每日行程</span><span class="sec-line"></span></div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(1)"><span class="tb-day">4/23 四</span>D1 抵達</button>
+    <button class="tab-btn" onclick="switchTab(2)"><span class="tb-day">4/24 五</span>D2 探索</button>
+    <button class="tab-btn" onclick="switchTab(3)"><span class="tb-day">4/25 六</span>D3 回台</button>
+  </div>
+
+  <div class="tab-panel-wrap">
+
+    <!-- D1 -->
+    <div class="tab-panel active" id="tab1">
+      <div class="tab-header">
+        <div class="day-num" style="background:#E8EDF8;color:#1A2744">D1</div>
+        <div><div class="day-title">深夜抵達首爾 · 江南初探</div><div class="day-date">4月23日（四）· 凌晨抵達</div></div>
+      </div>
+      <div class="stop"><span class="stop-time">01:25</span><span class="stop-dot" style="background:#9CA3AF"></span><div><div class="stop-title">桃園機場出發</div><div class="stop-desc">LJ734 · 座位 42C · 凌晨班機，建議提前到機場</div></div><span class="stop-tag t-flight">航班</span></div>
+      <div class="stop"><span class="stop-time">05:00</span><span class="stop-dot" style="background:#9CA3AF"></span><div><div class="stop-title">仁川機場抵達 <a href="https://maps.google.com/?q=Incheon+International+Airport" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">入境後先辦理換匯，再搭 AREX 快線前往首爾市區，約 43 分鐘抵達首爾站</div></div><span class="stop-tag t-flight">航班</span></div>
+      <div class="stop"><span class="stop-time">05:30</span><span class="stop-dot" style="background:#C9A84C"></span><div><div class="stop-title">仁川機場換匯 <a href="https://maps.google.com/?q=Incheon+Airport+currency+exchange" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">入境大廳有多間換錢所，T2 推薦 KEB 하나銀行或 Shinhan 銀行，機場匯率尚可。明洞、東大門的 私營換錢所匯率更好，可留部分到市區再換</div></div><span class="stop-tag t-hotel">換匯</span></div>
+      <div class="stop"><span class="stop-time">07:00</span><span class="stop-dot" style="background:#1E40AF"></span><div><div class="stop-title">voco Seoul Gangnam 行李寄放 <a href="https://maps.google.com/?q=voco+Seoul+Gangnam" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">Check-in 時間未到，先寄放行李，輕裝出發探索江南</div></div><span class="stop-tag t-hotel">住宿</span></div>
+      <div class="stop"><span class="stop-time">08:00</span><span class="stop-dot" style="background:#166534"></span><div><div class="stop-title">早餐：江南區早餐咖啡館 <a href="https://maps.google.com/?q=cafe+Gangnam+Seoul+breakfast" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">推薦 Cafe Bora 或附近韓式早午餐，補充體力</div></div><span class="stop-tag t-cafe">咖啡</span></div>
+      <div class="stop"><span class="stop-time">10:30</span><span class="stop-dot" style="background:#BE185D"></span><div><div class="stop-title">前往 Browdoll 江南本店 <a href="https://maps.app.goo.gl/KG6dP1YqW1546KoE7" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">地鐵到鶴洞站（학동역），從 1 號出口出來後，往 2 號出口方向直走即可抵達。江南交通擁擠，建議提前 30 分鐘出發</div></div><span class="stop-tag t-relax">美容</span></div>
+      <div class="stop"><span class="stop-time">11:00</span><span class="stop-dot" style="background:#BE185D"></span><div><div class="stop-title">Browdoll 飄眉 + 紋唇 <a href="https://maps.app.goo.gl/KG6dP1YqW1546KoE7" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">首爾 江南區 論峴洞 208-1，2樓。飄眉 + 紋唇同時施作約 2.5 小時，可化妝前往，術前會在現場清潔施術部位</div></div><span class="stop-tag t-relax">美容預約</span></div>
+      <div class="stop"><span class="stop-time">13:30</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">午餐：論峴洞附近韓食 <a href="https://maps.google.com/?q=restaurant+Nonhyeon+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">Browdoll 步行範圍內用餐，紋唇後建議選清淡食物，避免過燙或刺激性食物</div></div><span class="stop-tag t-food">美食</span></div>
+      <div class="stop"><span class="stop-time">12:00</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">午餐：江南區韓食 <a href="https://maps.google.com/?q=Korean+food+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">推薦韓式拌飯、烤肉或冷麵，正宗首爾口味</div></div><span class="stop-tag t-food">美食</span></div>
+      <div class="stop"><span class="stop-time">13:30</span><span class="stop-dot" style="background:#1A2744"></span><div><div class="stop-title">狎鷗亭 · 清潭洞漫步 <a href="https://maps.google.com/?q=Apgujeong+Cheongdam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">韓國最頂級商圈，精品旗艦店、網紅咖啡館林立，Dior、Chanel、Louis Vuitton 旗艦店都在這</div></div><span class="stop-tag t-market">逛街</span></div>
+      <div class="stop"><span class="stop-time">15:00</span><span class="stop-dot" style="background:#1E40AF"></span><div><div class="stop-title">voco Check-in <a href="https://maps.google.com/?q=voco+Seoul+Gangnam" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">回飯店辦理 Check-in，梳洗休息，讓眉毛和唇部稍作修復</div></div><span class="stop-tag t-hotel">住宿</span></div>
+      <div class="stop"><span class="stop-time">16:30</span><span class="stop-dot" style="background:#166534"></span><div><div class="stop-title">下午茶：清潭洞網美咖啡館 <a href="https://maps.google.com/?q=cafe+Cheongdam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">推薦 Nudake 或 Cher Cheongdam，飯店步行可達，清潭洞咖啡館質感超高，術後坐下來拍照最適合</div></div><span class="stop-tag t-cafe">咖啡</span></div>
+      <div class="stop"><span class="stop-time">18:00</span><span class="stop-dot" style="background:#9D174D"></span><div><div class="stop-title">COEX 星空圖書館 + 逛街 <a href="https://maps.google.com/?q=COEX+Starfield+Library+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">清潭洞步行約 10 分鐘，首爾最美圖書館免費參觀，COEX Mall 同時可採買伴手禮，輕鬆不費力</div></div><span class="stop-tag t-culture">文化</span></div>
+      <div class="stop"><span class="stop-time">20:00</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">晚餐：江南區韓式烤肉 <a href="https://maps.google.com/?q=Korean+BBQ+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">首爾正宗韓式烤肉，推薦三層肉（삼겹살）或牛小排。紋唇後讓肉稍涼再吃，避免過燙</div></div><span class="stop-tag t-food">美食</span></div>
+    </div>
+
+    <!-- D2 -->
+    <div class="tab-panel" id="tab2">
+      <div class="tab-header">
+        <div class="day-num" style="background:#E8EDF8;color:#1A2744">D2</div>
+        <div><div class="day-title">弘大 · 明洞 · 景福宮</div><div class="day-date">4月24日（五）· 全天</div></div>
+      </div>
+      <div class="stop"><span class="stop-time">09:00</span><span class="stop-dot" style="background:#166534"></span><div><div class="stop-title">早餐：飯店周邊咖啡館 <a href="https://maps.google.com/?q=cafe+Nonhyeon+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">論峴洞附近咖啡館密集，韓系裝潢拍照一流</div></div><span class="stop-tag t-cafe">咖啡</span></div>
+      <div class="stop"><span class="stop-time">10:00</span><span class="stop-dot" style="background:#1A2744"></span><div><div class="stop-title">景福宮 <a href="https://maps.google.com/?q=Gyeongbokgung+Palace+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">搭地鐵 3 號線前往，朝鮮王朝最大宮殿，可租借韓服入場，票價約 3,000 KRW</div></div><span class="stop-tag t-culture">文化</span></div>
+      <div class="stop"><span class="stop-time">11:30</span><span class="stop-dot" style="background:#1A2744"></span><div><div class="stop-title">北村韓屋村漫步 <a href="https://maps.google.com/?q=Bukchon+Hanok+Village+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">從景福宮步行 10 分鐘，傳統韓屋保留完整，巷弄拍照超上鏡，清晨或上午人較少</div></div><span class="stop-tag t-culture">文化</span></div>
+      <div class="stop"><span class="stop-time">12:00</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">午餐：仁寺洞傳統韓食 <a href="https://maps.google.com/?q=Insadong+restaurant+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">北村步行 10 分鐘到仁寺洞，推薦石鍋拌飯或傳統韓定食。手術前避免油膩食物</div></div><span class="stop-tag t-food">美食</span></div>
+      <div class="stop"><span class="stop-time">13:00</span><span class="stop-dot" style="background:#065F46"></span><div><div class="stop-title">BBAE 吸脂醫院 · 腹部環抽 預約 <a href="https://maps.google.com/?q=서울+강남구+강남대로+478+제우빌딩" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">地址：강남구 강남대로 478 제우빌딩 2층 · 地鐵 9 號線新論峴站 3 號出口出來 50 米。手術後需休息，建議穿寬鬆舒適衣物前往</div></div><span class="stop-tag t-relax">醫美預約</span></div>
+      <div class="stop"><span class="stop-time">16:00</span><span class="stop-dot" style="background:#1E40AF"></span><div><div class="stop-title">回飯店休息 <a href="https://maps.google.com/?q=voco+Seoul+Gangnam" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">手術後需充分休息，回 voco 臥床休養，避免劇烈活動。新論峴站搭地鐵 1 站即到江南區</div></div><span class="stop-tag t-hotel">住宿</span></div>
+      <div class="stop"><span class="stop-time">18:30</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">晚餐：飯店周邊清淡韓食 <a href="https://maps.google.com/?q=restaurant+Nonhyeon+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">手術後建議清淡飲食，推薦豆腐鍋或粥品，避免辛辣刺激，不要飲酒</div></div><span class="stop-tag t-food">美食</span></div>
+      <div class="stop"><span class="stop-time">20:00</span><span class="stop-dot" style="background:#166534"></span><div><div class="stop-title">論峴洞咖啡館散步 <a href="https://maps.google.com/?q=cafe+Nonhyeon+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">飯店附近輕鬆走走，找間安靜咖啡館坐坐，避免過度行走，早點回飯店休息</div></div><span class="stop-tag t-cafe">咖啡</span></div>
+    </div>
+
+    <!-- D3 -->
+    <div class="tab-panel" id="tab3">
+      <div class="tab-header">
+        <div class="day-num" style="background:#FDECEA;color:#C0392B">D3</div>
+        <div><div class="day-title">最後衝刺 · 深夜飛回台灣</div><div class="day-date">4月25日（六）· 深夜班機</div></div>
+      </div>
+      <div class="stop"><span class="stop-time">09:00</span><span class="stop-dot" style="background:#166534"></span><div><div class="stop-title">早餐：飯店或附近咖啡館 <a href="https://maps.google.com/?q=voco+Seoul+Gangnam" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">最後一個首爾早晨，悠閒享用早餐</div></div><span class="stop-tag t-cafe">咖啡</span></div>
+      <div class="stop"><span class="stop-time">10:00</span><span class="stop-dot" style="background:#9D174D"></span><div><div class="stop-title">Olive Young 江南旗艦店掃貨 <a href="https://maps.google.com/?q=Olive+Young+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">韓妝伴手禮一次買齊，防曬、面膜、精華液、氣墊粉底，江南旗艦店品項最全，滿額記得退稅</div></div><span class="stop-tag t-market">採買</span></div>
+      <div class="stop"><span class="stop-time">11:30</span><span class="stop-dot" style="background:#1A2744"></span><div><div class="stop-title">益善洞韓屋街漫步 <a href="https://maps.google.com/?q=Ikseon-dong+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">搭地鐵前往，首爾最美韓屋咖啡巷弄，傳統與現代融合，適合拍照、買手工藝伴手禮</div></div><span class="stop-tag t-culture">文化</span></div>
+      <div class="stop"><span class="stop-time">13:00</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">午餐：廣藏市場 <a href="https://maps.google.com/?q=Gwangjang+Market+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">益善洞步行 5 分鐘，首爾知名傳統市場，綠豆煎餅、生章魚、麻藥紫菜飯捲必吃</div></div><span class="stop-tag t-food">美食</span></div>
+      <div class="stop"><span class="stop-time">14:30</span><span class="stop-dot" style="background:#1E40AF"></span><div><div class="stop-title">飯店 Check-out <a href="https://maps.google.com/?q=voco+Seoul+Gangnam" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">行李寄放，輕裝繼續下午行程</div></div><span class="stop-tag t-hotel">住宿</span></div>
+      <div class="stop"><span class="stop-time">15:30</span><span class="stop-dot" style="background:#065F46"></span><div><div class="stop-title">韓式全身護理 Spa <a href="https://maps.google.com/?q=spa+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">江南區有多間高質感 Spa，提供全身按摩或護膚療程，旅途最後好好放鬆，約 1.5 小時</div></div><span class="stop-tag t-relax">美容</span></div>
+      <div class="stop"><span class="stop-time">17:30</span><span class="stop-dot" style="background:#166534"></span><div><div class="stop-title">狎鷗亭咖啡館歇腳 <a href="https://maps.google.com/?q=cafe+Apgujeong+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">Spa 後來杯咖啡休息，推薦 Nudake 或 Cafe de Paris，補妝拍照準備出發</div></div><span class="stop-tag t-cafe">咖啡</span></div>
+      <div class="stop"><span class="stop-time">19:00</span><span class="stop-dot" style="background:#92400E"></span><div><div class="stop-title">晚餐：江南最後一餐 <a href="https://maps.google.com/?q=Korean+restaurant+Gangnam+Seoul" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">推薦純豆腐鍋（순두부찌개）或韓式炸雞，好好道別首爾</div></div><span class="stop-tag t-food">美食</span></div>
+      <div class="stop"><span class="stop-time">20:00</span><span class="stop-dot" style="background:#1E40AF"></span><div><div class="stop-title">回飯店取行李</div><div class="stop-desc">取回寄放行李，出發前往仁川機場</div></div><span class="stop-tag t-hotel">住宿</span></div>
+      <div class="stop"><span class="stop-time">20:30</span><span class="stop-dot" style="background:#9CA3AF"></span><div><div class="stop-title">前往仁川機場 <a href="https://maps.google.com/?q=Incheon+International+Airport" target="_blank" class="map-link">📍 地圖</a></div><div class="stop-desc">搭 AREX 約 43 分鐘或計程車，提前 2 小時到 T2 辦理登機</div></div><span class="stop-tag t-flight">航班</span></div>
+      <div class="stop"><span class="stop-time">22:40</span><span class="stop-dot" style="background:#9CA3AF"></span><div><div class="stop-title">LJ733 起飛 → 00:10 抵台</div><div class="stop-desc">座位 42D · 仁川 T2 出發，桃園 T1 抵達</div></div><span class="stop-tag t-flight">航班</span></div>
+    </div>
+
+  </div>
+
+  <div class="sec" style="margin-top:2.5rem"><span class="sec-label">注意事項</span><span class="sec-line"></span></div>
+
+  <div class="tip-box" style="background:#FEF3C7;border:1px solid #FDE68A">
+    <div class="tip-title" style="color:#92400E">💄 Browdoll 飄眉 + 紋唇 預約注意事項</div>
+    <ul>
+      <li style="color:#78350F">預約時間：4/23 上午 11:00，請提前 30 分鐘抵達（江南交通擁擠，建議提早出發）</li>
+      <li style="color:#78350F">地址：首爾 江南區 論峴洞 208-1，2樓 Browdoll｜地鐵鶴洞站 1 號出口，往 2 號出口方向直走 <a href="https://maps.app.goo.gl/KG6dP1YqW1546KoE7" target="_blank" style="color:#92400E">📍 地圖</a></li>
+      <li style="color:#78350F">施術時間：眉毛約 1–1.5 小時 ／ 唇部約 1.5–2 小時｜同時施作約 2–2.5 小時</li>
+      <li style="color:#78350F">✔ 可以化妝後前往，術前會在現場清潔施術部位</li>
+      <li style="color:#78350F">付款：韓元現金或實體信用卡（不接受手機感應付款）｜現金與刷卡同價</li>
+      <li style="color:#78350F">附近無兌換所，現金請事先準備好</li>
+      <li style="color:#78350F">⚠️ 美容項目不適用稅金退還（Tax Refund）</li>
+      <li style="color:#78350F">如需取消或更改，請提前聯繫，本店為完全預約制，不提前告知可能無法進行</li>
+    </ul>
+  </div>
+
+  <div class="tip-box" style="background:#FEF3C7;border:1px solid #FDE68A">
+    <div class="tip-title" style="color:#92400E">⚕️ 韓國手術術前注意事項</div>
+    <ul>
+      <li style="color:#78350F">⭐ 請務必攜帶護照至醫院，提前 30 分鐘抵達</li>
+      <li style="color:#78350F">🚫 術前 10 小時完全禁食禁水：包含水、飲料、口香糖、糖果等。因喝水導致無法手術，費用不退！</li>
+      <li style="color:#78350F">術前一週禁止服用：阿司匹林、維生素、Omega-3、紅參等保健品與藥物</li>
+      <li style="color:#78350F">⭐ 手術部位不得施打玻尿酸填充</li>
+      <li style="color:#78350F">手腳指甲油、光療甲需全部清除再來院</li>
+      <li style="color:#78350F">準備方便更換的衣物（拉鍊連帽外套、襯衫等）</li>
+      <li style="color:#78350F">術後禁止自行開車；請卸除所有飾品，避免化妝來院</li>
+      <li style="color:#78350F">手術當日請勿使用：身體乳、護髮精華、造型噴霧等</li>
+      <li style="color:#78350F">術後可能有組織液滲出，請提前準備衛生棉及防水尿墊以保護酒店床品</li>
+      <li style="color:#78350F">⭐⭐ 如有貧血情況請注意：HGB 血紅指數太低當日醫院將拒絕手術且不退定金。建議術前 20 天服用補鐵劑</li>
+      <li style="color:#78350F">如有藥物或食物過敏，請提前告知醫院</li>
+      <li style="color:#78350F">上半身手術：請事先清除腋下毛髮｜下半身（腹部）手術：請清除比基尼線毛髮</li>
+      <li style="color:#78350F">手術日前先行洗澡，手術當日及隔日無法正常淋浴</li>
+      <li style="color:#78350F">取消手術：兩週前取消 100% 退款｜兩週內取消不退款</li>
+      <li style="color:#78350F">術前 1–2 天醫院將再次傳達注意事項，如有疑問請隨時聯繫</li>
+    </ul>
+  </div>
+
+  <div class="tip-box" style="background:#FEF3C7;border:1px solid #FDE68A">
+    <div class="tip-title" style="color:#92400E">🚇 交通建議</div>
+    <ul>
+      <li style="color:#78350F">從仁川機場搭 AREX 快線到首爾站約 43 分鐘，票價約 9,500 KRW</li>
+      <li style="color:#78350F">市區交通建議買 T-money 交通卡，地鐵、公車均可使用</li>
+      <li style="color:#78350F">Kakao T 是首爾最方便的叫車 App，類似台灣的 Uber</li>
+    </ul>
+  </div>
+
+  <div class="tip-box" style="background:#FEF3C7;border:1px solid #FDE68A">
+    <div class="tip-title" style="color:#92400E">💰 行前準備</div>
+    <ul>
+      <li style="color:#78350F">韓圜建議在台灣先換好，或到明洞、東大門附近換錢所匯率較好</li>
+      <li style="color:#78350F">4 月首爾春季，氣溫約 10–18°C，早晚偏涼，薄外套必備</li>
+      <li style="color:#78350F">Olive Young 滿額可退稅，記得保留收據</li>
+    </ul>
+  </div>
+
+  <div class="tip-box" style="background:#FEF3C7;border:1px solid #FDE68A">
+    <div class="tip-title" style="color:#92400E">✈️ 回程提醒</div>
+    <ul>
+      <li style="color:#78350F">班機 22:40 從仁川 T2 起飛，建議 20:30 前到機場</li>
+      <li style="color:#78350F">抵台時間 00:10，隔日凌晨，注意回程交通安排</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">首爾快閃 2026 · 濟州航空 LJ734 / LJ733</div>
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===n-1));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===n-1));
+}
+
+(function(){
+  const canvas = document.getElementById('beautyCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  const symbols = ['✦','◆','✿','◇','♡','✧','◈','⬡'];
+  const colors = ['#DB2777','#BE185D','#EC4899','#F472B6','#9D174D','#C026D3','#E11D48','#A21CAF'];
+
+  for(let i = 0; i < 38; i++) {
+    particles.push({
+      x: Math.random() * 1200,
+      y: Math.random() * 300,
+      size: 8 + Math.random() * 18,
+      symbol: symbols[Math.floor(Math.random() * symbols.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 0.3 + Math.random() * 0.4,
+      speedX: (Math.random() - 0.5) * 0.4,
+      speedY: -0.3 - Math.random() * 0.3,
+      wobble: Math.random() * Math.PI * 2,
+      wobbleSpeed: 0.01 + Math.random() * 0.015,
+    });
+  }
+
+  // Lipstick drawing function
+  function drawLipstick(x, y, size, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.35;
+    // tube
+    ctx.beginPath();
+    ctx.roundRect(x - size*0.18, y, size*0.36, size*1.1, size*0.08);
+    ctx.fill();
+    // bullet
+    ctx.beginPath();
+    ctx.moveTo(x - size*0.18, y);
+    ctx.lineTo(x - size*0.18, y - size*0.5);
+    ctx.lineTo(x + size*0.05, y - size*0.85);
+    ctx.lineTo(x + size*0.18, y - size*0.4);
+    ctx.lineTo(x + size*0.18, y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Star/diamond drawing
+  function drawDiamond(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.moveTo(x, y - size);
+    ctx.lineTo(x + size*0.6, y);
+    ctx.lineTo(x, y + size);
+    ctx.lineTo(x - size*0.6, y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const lipsticks = Array.from({length: 5}, () => ({
+    x: Math.random() * 1200,
+    y: 30 + Math.random() * 200,
+    size: 12 + Math.random() * 16,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    speedX: (Math.random() - 0.5) * 0.25,
+  }));
+
+  const diamonds = Array.from({length: 12}, () => ({
+    x: Math.random() * 1200,
+    y: Math.random() * 300,
+    size: 4 + Math.random() * 10,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: 0.25 + Math.random() * 0.35,
+    speedX: (Math.random() - 0.5) * 0.3,
+    speedY: -0.2 - Math.random() * 0.2,
+  }));
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // subtle gradient wash
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    grad.addColorStop(0, 'rgba(255,182,205,0.4)');
+    grad.addColorStop(0.5, 'rgba(255,105,180,0.25)');
+    grad.addColorStop(1, 'rgba(255,20,147,0.2)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // floating symbols
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.wobble += p.wobbleSpeed;
+      p.x += Math.sin(p.wobble) * 0.3;
+      if (p.y < -30) p.y = canvas.height + 10;
+      if (p.x > canvas.width + 30) p.x = -30;
+      if (p.x < -30) p.x = canvas.width + 30;
+      ctx.save();
+      ctx.font = `${p.size}px serif`;
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fillText(p.symbol, p.x, p.y);
+      ctx.restore();
+    });
+
+    // lipsticks
+    lipsticks.forEach(l => {
+      l.x += l.speedX;
+      if (l.x > canvas.width + 30) l.x = -30;
+      if (l.x < -30) l.x = canvas.width + 30;
+      drawLipstick(l.x, l.y, l.size, l.color);
+    });
+
+    // diamonds
+    diamonds.forEach(d => {
+      d.x += d.speedX;
+      d.y += d.speedY;
+      if (d.y < -20) d.y = canvas.height + 10;
+      if (d.x > canvas.width + 20) d.x = -20;
+      if (d.x < -20) d.x = canvas.width + 20;
+      drawDiamond(d.x, d.y, d.size, d.color, d.alpha);
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+</script>
+</body>
+</html>
